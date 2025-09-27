@@ -158,3 +158,26 @@ export const Author = styled.Text`
   color: #666;
   margin-top: 2px;
 `;
+
+export const CadastroContainer = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+})`
+  background-color: #fff;
+`;
+
+export const CadastroInput = styled.TextInput.attrs((props) => ({
+  placeholderTextColor: "#333", // mais escuro que #999
+}))`
+  width: 80%;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 0 15px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  color: #000; /* força texto digitado em preto */
+`;
+

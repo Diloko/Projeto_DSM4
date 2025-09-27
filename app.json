@@ -1,12 +1,11 @@
 {
   "expo": {
-    "name": "projetoDSM4",
+    "name": "API TMDB",
     "slug": "projetoDSM4",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/TMDB.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -17,13 +16,22 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/TMDB.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.diloko.projetoDSM4"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "91f5abf5-638f-4db9-8c6a-05bc1aa30fbf"
+      }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

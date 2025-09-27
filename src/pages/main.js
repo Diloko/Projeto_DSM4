@@ -18,14 +18,14 @@ import {
 } from "../styles";
 
 export default class Main extends Component {
-  state = {
+  state = { //Armazena o filme digitado, a lista de filmes, o estado de carregamento e o e-mail do usuário logado.
     newMovie: "",
     movies: [],
     loading: false,
     email: "",
   };
 
-  async componentDidMount() {
+  async componentDidMount() { //Recupera o usuário logado e carrega os filmes salvos para ele.
     try {
       const userLogado = await AsyncStorage.getItem("userLogado");
       if (userLogado) {
@@ -43,7 +43,7 @@ export default class Main extends Component {
     }
   }
 
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(_, prevState) { //Sempre que a lista de filmes muda, ela é salva no armazenamento local, associada ao e-mail do usuário.
     const { movies, email } = this.state;
     if (prevState.movies !== movies && email) {
       const chaveFilmes = `movies_${email}`;
@@ -51,7 +51,7 @@ export default class Main extends Component {
     }
   }
 
-  handleAddMovie = async () => {
+  handleAddMovie = async () => { //Função chamada ao buscar um filme.
     try {
       const { movies, newMovie } = this.state;
       this.setState({ loading: true });
@@ -93,7 +93,7 @@ export default class Main extends Component {
     }
   };
 
-  render() {
+  render() { //Renderiza: campo de busca, botão de adicionar, lista filme com botão de detlahes e remover
     const { movies, newMovie, loading } = this.state;
     return (
       <Container>

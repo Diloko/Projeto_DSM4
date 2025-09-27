@@ -10,11 +10,11 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(""); //useState armazena os dados digitados pelo usuário.
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-const handleLogin = async () => {
+const handleLogin = async () => { //Função chamada ao clicar em "Entrar".
   try {
     const storedUsers = await AsyncStorage.getItem("users");
     const users = storedUsers ? JSON.parse(storedUsers) : [];
@@ -41,7 +41,7 @@ const handleLogin = async () => {
   }
 };
 
-  const handleCadastro = () => {
+  const handleCadastro = () => { //Redireciona para a tela de cadastro.
     navigation.navigate('cadastro')
   }
 
@@ -50,12 +50,14 @@ const handleLogin = async () => {
       <TextInput
         style={styles.input}
         placeholder="E-mail"
+        placeholderTextColor="#000000ff"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Senha"
+        placeholderTextColor="#000000ff"
         value={password}
         onChangeText={setPassword}
         secureTextEntry={true}
@@ -84,6 +86,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
     width: "80%",
+    color: "#000",
   },
   button: {
     backgroundColor: "#3498db",

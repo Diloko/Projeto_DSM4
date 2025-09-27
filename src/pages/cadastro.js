@@ -1,47 +1,54 @@
 import React, { Component } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-} from "react-native";
+  CadastroContainer,
+  CadastroInput,
+  ProfileButton,
+  ProfileButtonText,
+} from "../styles"; // Certifique-se de que esses estilos estão definidos
 
 export default class Cadastro extends Component {
-  state = {
+  state = { //Define os campos que serão preenchidos pelo usuário. Cada um representa um dado pessoal que será salvo
+    nome: "",
+    cpf: "",
+    curso: "",
+    telefone: "",
     email: "",
     password: "",
   };
 
-  handleCadastro = async () => {
-    const { email, password } = this.state;
+  handleCadastro = async () => { //Função que é chamada quando o usuário clica no botão "Cadastrar"
+    const { nome, cpf, curso, telefone, email, password } = this.state;
 
-    if (!email || !password) {
+    if (!nome || !cpf || !curso || !telefone || !email || !password) {
       alert("Preencha todos os campos!");
       return;
     }
 
-    const newUser = { email, password };
+    const newUser = { nome, cpf, curso, telefone, email, password };
 
     try {
-      // Recupera lista atual de usuários
       const storedUsers = await AsyncStorage.getItem("users");
       const users = storedUsers ? JSON.parse(storedUsers) : [];
 
-      // Verifica se o e-mail já está cadastrado
       const alreadyExists = users.some((user) => user.email === email);
       if (alreadyExists) {
         alert("Este e-mail já está cadastrado!");
         return;
       }
 
-      // Adiciona novo usuário à lista
       users.push(newUser);
       await AsyncStorage.setItem("users", JSON.stringify(users));
 
       alert("Usuário cadastrado com sucesso!");
-      this.setState({ email: "", password: "" });
+      this.setState({
+        nome: "",
+        cpf: "",
+        curso: "",
+        telefone: "",
+        email: "",
+        password: "",
+      });
       this.props.navigation.navigate("login");
     } catch (error) {
       alert("Erro ao cadastrar usuário!");
@@ -49,55 +56,49 @@ export default class Cadastro extends Component {
     }
   };
 
-  render() {
+  render() { //Renderiza os campos de entrada e o botão de cadastro.
+    const { nome, cpf, curso, telefone, email, password } = this.state;
+
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
+      <CadastroContainer>
+        <CadastroInput
+          placeholder="Nome completo"
+          value={nome}
+          onChangeText={(text) => this.setState({ nome: text })}
+        />
+        <CadastroInput
+          placeholder="CPF"
+          value={cpf}
+          keyboardType="numeric"
+          onChangeText={(text) => this.setState({ cpf: text })}
+        />
+        <CadastroInput
+          placeholder="Curso"
+          value={curso}
+          onChangeText={(text) => this.setState({ curso: text })}
+        />
+        <CadastroInput
+          placeholder="Telefone"
+          value={telefone}
+          keyboardType="phone-pad"
+          onChangeText={(text) => this.setState({ telefone: text })}
+        />
+        <CadastroInput
           placeholder="E-mail"
-          value={this.state.email}
-          onChangeText={(email) => this.setState({ email })}
+          value={email}
+          keyboardType="email-address"
+          onChangeText={(text) => this.setState({ email: text })}
         />
-        <TextInput
-          style={styles.input}
+        <CadastroInput
           placeholder="Senha"
-          value={this.state.password}
+          value={password}
           secureTextEntry={true}
-          onChangeText={(password) => this.setState({ password })}
+          onChangeText={(text) => this.setState({ password: text })}
         />
-        <TouchableOpacity style={styles.button} onPress={this.handleCadastro}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
-      </View>
+        <ProfileButton onPress={this.handleCadastro}>
+          <ProfileButtonText>Cadastrar</ProfileButtonText>
+        </ProfileButton>
+      </CadastroContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginVertical: 10,
-    width: "80%",
-  },
-  button: {
-    backgroundColor: "#3498db",
-    borderRadius: 5,
-    padding: 10,
-    width: "80%",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-});
